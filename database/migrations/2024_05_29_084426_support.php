@@ -11,7 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create("support", function (Blueprint $table) {
+            $table->bigIncrements("id");
+            $table->text("name");
+            $table->string("message");
+            $table->string("email");
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('support');
     }
 };

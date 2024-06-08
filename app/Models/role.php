@@ -3,11 +3,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class support extends Model
+class role extends Model
 {
     use HasFactory;
-    protected $table = "support";
     protected $fillable = [
-        "name","message","email"
+        "name"
     ];
+    public function user(){
+        return $this->belongsTo(user::class);
+    }
 }

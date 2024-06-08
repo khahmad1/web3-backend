@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
-    }
+        Schema::create("type", function (Blueprint $table) {
+            $table->bigIncrements("id");
+            $table->string("type");
+            $table->timestamps();
+        });
+}
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists("type");
     }
 };

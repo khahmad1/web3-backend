@@ -1,25 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-use App\Models\category;
-class categoryController extends Controller
+use App\Models\role;
+class roleController extends Controller
 {
-    //
     function create(Request $request){
-        $category = new category;
-        $category->name = $request->name;
-        $category->save();
+        $role = new role;
+        $role->name = $request->name;
+        $role->save();
         return response()->json([
             "status" => "success",
             "message"=> $request->all()
         ]);
     }
     function update(Request $request, $id){
-        $category = category::find($id);
-        $category->name = $request->name;
-        $category->save();
+        $role = role::find($id);
+        $role->name = $request->name;
+        $role->save();
         return response()->json([
             "status"=> "success",
             "message"=> $request->all()
@@ -27,21 +25,21 @@ class categoryController extends Controller
     }
     function read($id = null){
         if(empty($id)){
-            $category = category::all();
+            $role = role::all();
             return response()->json([
                 "status"=> "success",
-                "message"=> $category->all()
+                "message"=> $role->all()
             ]);
         }
-        $category = category::find($id);
+        $role = role::find($id);
         return response()->json([
             "status"=> "success",
-            "message"=> $category
+            "message"=> $role
         ]);
     }
     function delete($id){
-        $category = category::find($id);
-        $category->delete();
+        $role = role::find($id);
+        $role->delete();
         return response()->json([
             "status"=> "success"
         ]);
