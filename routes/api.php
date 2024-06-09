@@ -6,6 +6,9 @@ use App\Http\Controllers\supportController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\typeController;
 use App\Http\Controllers\companyController;
+use App\Http\Controllers\addressController;
+use App\Http\Controllers\roleController;
+use App\Http\Controllers\userController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,7 +49,19 @@ Route::post('/company/update/{id}',[companyController::class,'update']);
 Route::delete('/company/delete/{id}',[companyController::class,'delete']);
 
 //ROLE
-Route::post('/company/create',[companyController::class,'create']);
-Route::get('/company/read/{id?}',[companyController::class,'read']);
-Route::post('/company/update/{id}',[companyController::class,'update']);
-Route::delete('/company/delete/{id}',[companyController::class,'delete']);
+Route::post('/role/create',[roleController::class,'create']);
+Route::get('/role/read/{id?}',[roleController::class,'read']);
+Route::post('/role/update/{id}',[roleController::class,'update']);
+Route::delete('/role/delete/{id}',[roleController::class,'delete']);
+
+//ADDRESS
+Route::post('/address/create',[addressController::class,'create']);
+Route::get('/address/read/{id?}',[addressController::class,'read']);
+Route::post('/address/update/{id}',[addressController::class,'update']);
+Route::delete('/address/delete/{id}',[addressController::class,'delete']);
+
+//USER
+Route::post('/user/create',[userController::class,'create']);
+Route::get('/user/read/{id?}',[userController::class,'read']);
+Route::post('/user/update/{id}',[userController::class,'update']);
+Route::delete('/user/delete/{id}',[userController::class,'delete']);

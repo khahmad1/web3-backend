@@ -8,6 +8,7 @@ use App\Models\medicine;
 class category extends Model
 {
     use HasFactory;
+    protected $table = "category";
     protected $fillable = ["name"];
     public function medicine(){
         return $this->hasMany(medicine::class);
