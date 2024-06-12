@@ -19,10 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string("phone");
             $table->string("logo")->nullable();
-            $table->bigInteger("address_id");
-            $table->bigInteger("role_id");
-            $table->foreignId("address_id")->references("id")->on("address")->onDelete("cascade");
-            $table->foreignId("role_id")->references("id")->on("role")->onDelete("cascade");
+            $table->foreignId("address_id")->constrained("address")->onDelete("cascade");
+            $table->foreignId("role_id")->constrained("role");
             $table->rememberToken();
             $table->timestamps();
         });

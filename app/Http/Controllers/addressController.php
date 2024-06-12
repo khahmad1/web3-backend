@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\address;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class addressController extends Controller
@@ -15,10 +16,17 @@ class addressController extends Controller
         return response()->json([
             "status" => "success",
             "message"=> $request->all()
-        ]);
+        ],201);
     }
     function update(Request $request, $id){
-        $address = address::find($id);
+        try{
+            $address = address::findOrFail($id);
+        }catch(ModelNotFoundException $e){
+            return response()->json([
+                "status"=> "error",
+                "message"=> "Address with the id ".$id." does not exist"
+            ],404);
+        }
         $address->city = $request->city;
         $address->country = $request->country;
         $address->street = $request->street;
@@ -26,7 +34,7 @@ class addressController extends Controller
         return response()->json([
             "status"=> "success",
             "message"=> $request->all()
-        ]);
+        ],201);
     }
     function read($id = null){
         if(empty($id)){
@@ -34,26 +42,35 @@ class addressController extends Controller
             return response()->json([
                 "status"=> "success",
                 "message"=> $address->all()
-            ]);
+            ],201);
         }
-        $address = address::find($id);
-        if(!$address){
+        try{
+            $address = address::findOrFail($id);
+        }catch(ModelNotFoundException $e){
             return response()->json([
-                "status"=> "failed",
-                "message" => "Address does not exist"
-            ]);
+                "status"=> "error",
+                "message"=> "Address with the id ".$id." does not exist"
+            ],404);
         }
+        
         return response()->json([
             "status"=> "success",
             "message"=> $address
-        ]);
+        ],201);
     }
     function delete($id){
-        $address = address::find($id);
+        try{
+            $address = address::find($id);
+        }catch(ModelNotFoundException $e){
+            return response()->json([
+                "status"=> "error",
+                "message"=> "Address with the id ".$id." does not exist"
+            ],404);
+        }
         $address->delete();
         return response()->json([
             "status"=> "success",
             "message" => "Address deleted"
-        ]);
+        ],201);
     }
 }
