@@ -9,6 +9,17 @@ use App\Models\type;
 class medicine extends Model
 {
     use HasFactory;
+    protected $table = 'medicine';
+    protected $fillable = [
+        'name',
+        'price',
+        'quantity',
+        'image',
+        'category_id',
+        'type_id',
+        'company_id',
+        'expiration_date',
+    ];
     public function category(){
         return $this->belongsTo(category::class);
     }

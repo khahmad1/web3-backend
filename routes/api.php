@@ -7,6 +7,7 @@ use App\Http\Controllers\categoryController;
 use App\Http\Controllers\typeController;
 use App\Http\Controllers\companyController;
 use App\Http\Controllers\addressController;
+use App\Http\Controllers\medicineController;
 use App\Http\Controllers\roleController;
 use App\Http\Controllers\userController;
 /*
@@ -65,3 +66,12 @@ Route::post('/user/create',[userController::class,'create']);
 Route::get('/user/read/{id?}',[userController::class,'read']);
 Route::post('/user/update/{id}',[userController::class,'update']);
 Route::delete('/user/delete/{id}',[userController::class,'delete']);
+
+// medicine
+Route::post('/medicine/create',[medicineController::class,'addMedicine']);
+Route::post('/medicine/update/{id}',[medicineController::class,'editMedicine']);
+Route::get('/medicine',[medicineController::class,'getAllMedicine']);
+Route::get('/medicine/{name}',[medicineController::class,'getMedicineByName']);
+Route::get('/medicine/category/{category_id}',[medicineController::class,'getMedicineByCategory']);
+Route::delete('/medicine/delete/{id}',[medicineController::class,'deleteMedicine']);
+
