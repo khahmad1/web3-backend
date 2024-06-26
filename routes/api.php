@@ -11,7 +11,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\medicineController;
 use App\Http\Controllers\roleController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\orderLineController;
+use App\Http\Controllers\orderController;
 /*
+
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
@@ -67,3 +70,14 @@ Route::get('/medicine/{name}',[medicineController::class,'getMedicineByName']);
 Route::get('/medicine/category/{category_id}',[medicineController::class,'getMedicineByCategory']);
 Route::delete('/medicine/delete/{id}',[medicineController::class,'deleteMedicine']);
 
+//ORDER
+Route::post('/order/create',[orderController::class,'create']);
+Route::get('/order/read/{id?}',[orderController::class,'read']);
+Route::post('/order/update/{id}',[orderController::class,'update']);
+Route::delete('/order/delete/{id}',[orderController::class,'delete']);
+
+//ORDER LINE
+Route::post('/orderline/create',[orderLineController::class,'create']);
+Route::get('/orderline/read/{id?}',[orderLineController::class,'read']);
+Route::post('/orderline/update/{id}',[orderLineController::class,'update']);
+Route::delete('/orderline/delete/{id}',[orderLineController::class,'delete']);
