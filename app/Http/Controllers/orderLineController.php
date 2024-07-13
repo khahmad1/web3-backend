@@ -4,6 +4,9 @@ use App\Models\medicine;
 use Illuminate\Http\Request;
 use App\Models\orderLine;
 use App\Models\order;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class orderLineController extends Controller
 {
     //
@@ -71,5 +74,19 @@ class orderLineController extends Controller
             "status"=> "success",
             "message"=> "order line deleted successfully"
         ]);
+    }
+    function getLineByOrder(Request $request, $id){
+
+       $orderLines = orderLine::where("order_id", $id)->get();
+       if($orderLines->isEmpty()){
+        return response()->json([
+            "status"=> "error",
+            "message"=> "No order with id ".$id
+        ],404);
+        }  
+       return response()->json([
+        "status"=> "success",
+        "message" => $orderLines
+       ],200);
     }
 }

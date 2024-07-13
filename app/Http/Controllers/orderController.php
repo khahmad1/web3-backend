@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\order;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class orderController extends Controller
 {
     //
@@ -74,5 +77,19 @@ class orderController extends Controller
             "status"=> "success",
             "message"=> "order deleted"
         ]);
+    }
+    function getOrderByUser(Request $request, $id){
+       $orders = order::where("user_id", $id)->get();
+       if($orders->isEmpty()){
+        return response()->json([
+            "status"=> "error",
+            "message"=> "No user with id ".$id
+        ],404);
+        }  
+       return response()->json([
+        "status"=> "success",
+        "message" => $orders
+       ]);
+        
     }
 }
