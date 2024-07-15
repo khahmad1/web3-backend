@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-        
+            $table->string('phone')->unique();
             $table->string('password');
-            // $table->string("phone");
-            // $table->string("logo")->nullable();
-            // $table->foreignId("address_id")->constrained("address")->onDelete("cascade");
-            // $table->foreignId("role_id")->constrained("role");
+            $table->string('is_admin')->default(false);
+            $table->string('logo')->nullable(); 
+            $table->string('address');          
             $table->rememberToken();
             $table->timestamps();
         });

@@ -50,14 +50,14 @@ Route::get('/company/read/{id?}',[companyController::class,'read']);
 Route::post('/company/update/{id}',[companyController::class,'update']);
 Route::delete('/company/delete/{id}',[companyController::class,'delete']);
 
-//USER
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
 
-});
+Route::post('/user/login',[AuthController::class,'login']);
+Route::post('/user/register',[AuthController::class,'register']);
+Route::post('/user/refresh',[AuthController::class,'refresh']);
+Route::post('/user/logout',[AuthController::class,'logout']);
+Route::get('/user/admins',[AuthController::class,'getAdmins']);
+Route::get('/user/customers',[AuthController::class,'getCustomers']);
+Route::post('/user/updateRole/{id}',[AuthController::class,'AdminRole']);
 
 // medicine
 Route::post('/medicine/create',[medicineController::class,'addMedicine']);
