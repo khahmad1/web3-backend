@@ -40,6 +40,7 @@ Route::post('/category/create',[categoryController::class,'create']);
 Route::get('/category/read/{id?}',[categoryController::class,'read']);
 Route::post('/category/update/{id}',[categoryController::class,'update']);
 Route::delete('/category/delete/{id}',[categoryController::class,'delete']);
+Route::get('/category',[categoryController::class,'getAllCategory']);
 
 //TYPE
 Route::post('/type/create',[typeController::class,'create']);

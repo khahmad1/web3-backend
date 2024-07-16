@@ -80,4 +80,12 @@ class categoryController extends Controller
             "status"=> "success"
         ],201);
     }
+    public function getAllCategory()
+    {
+        $category = category::get();
+
+        return response()->json(
+            $category
+        );
+    }
 }

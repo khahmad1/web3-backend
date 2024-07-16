@@ -129,12 +129,13 @@ class medicineController extends Controller
     }
     public function getAllMedicine()
     {
-        $medicine = medicine::get();
-
-        return response()->json(
-            $medicine
-        );
+        // Fetch all medicines with related category, type, and company information
+        $medicines = Medicine::with(['category', 'type', 'company'])->get();
+    
+        return response()->json($medicines);
     }
+    
+    
     public function getMedicineByName($name)
     {
         try {
