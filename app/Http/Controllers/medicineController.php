@@ -155,21 +155,20 @@ class medicineController extends Controller
     public function getMedicineByCategory($category_id)
     {
         try {
-
-            $category = category::with('medicine')->findOrFail($category_id);
-
+            // Fetch medicines directly from the medicine table where category_id matches
+            $medicines = Medicine::where('category_id', $category_id)->with(['category', 'type', 'company'])->get();
+    
             return response()->json(
-
-                $category->medicine,
+                $medicines,
                 200
             );
         } catch (\Exception $e) {
-
             return response()->json([
                 'error' => 'An error occurred while retrieving the medicines: ' . $e->getMessage()
             ], 500);
         }
     }
+    
     public function deleteMedicine( $id)
     {
         $medicine = medicine::find( $id);
