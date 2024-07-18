@@ -78,4 +78,13 @@ class companyController extends Controller
             "message"=> "Company deleted"
         ],201);
     }
+    public function getAllCompany()
+    {
+        $company = company::get();
+
+        return response()->json(
+            $company
+        );
+    }
 }
+

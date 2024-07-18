@@ -86,4 +86,12 @@ class supportController extends Controller
             "message"=> "Support Deleted"
         ],201);
     }
+    public function getAllMessage()
+    {
+        $support = support::get();
+
+        return response()->json(
+            $support
+        );
+    }
 }

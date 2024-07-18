@@ -82,4 +82,13 @@ class typeController extends Controller
             "message"=> "type deleted"
         ],201);
     }
+    public function getAllType()
+    {
+        $type = type::get();
+
+        return response()->json(
+            $type
+        );
+    }
 }
+

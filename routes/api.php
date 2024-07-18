@@ -34,6 +34,7 @@ Route::post('/support/create',[supportController::class,'create']);
 Route::get('/support/read/{id?}',[supportController::class,'read']);
 Route::post('/support/update/{id}',[supportController::class,'update']);
 Route::delete('/support/delete/{id}',[supportController::class,'delete']);
+Route::delete('/support',[supportController::class,'getAllMessage']);
 
 //CATEGORY
 Route::post('/category/create',[categoryController::class,'create']);
@@ -47,12 +48,14 @@ Route::post('/type/create',[typeController::class,'create']);
 Route::get('/type/read/{id?}',[typeController::class,'read']);
 Route::post('/type/update/{id}',[typeController::class,'update']);
 Route::delete('/type/delete/{id}',[typeController::class,'delete']);
+Route::get('/type',[typeController::class,'getAllType']);
 
 //COMPANY
 Route::post('/company/create',[companyController::class,'create']);
 Route::get('/company/read/{id?}',[companyController::class,'read']);
 Route::post('/company/update/{id}',[companyController::class,'update']);
 Route::delete('/company/delete/{id}',[companyController::class,'delete']);
+Route::get('/company',[companyController::class,'getAllCompany']);
 
 
 

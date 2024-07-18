@@ -108,20 +108,18 @@ class AuthController extends Controller
 {
     $adminUsers = User::where('is_admin', true)->get();
 
-    return response()->json([
-        'status' => 'success',
-        'users' => $adminUsers
-    ]);
+    return response()->json(
+       $adminUsers
+    );
 }
 
 public function getCustomers()
 {
     $nonAdminUsers = User::where('is_admin', false)->get();
 
-    return response()->json([
-        'status' => 'success',
-        'users' => $nonAdminUsers
-    ]);
+    return response()->json(
+      $nonAdminUsers
+    );
 }
 public function AdminRole(Request $request, $id)
     {
