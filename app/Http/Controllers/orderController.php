@@ -14,7 +14,6 @@ class orderController extends Controller
     function create(Request $request){
         $order = new order();
         $order->totalPrice = $request->totalPrice;
-        $order->date = $request->date;
         $order->status = $request->status;
         $facility = User::find($request->facility_id);
         $order->user()->associate($facility);
@@ -79,7 +78,7 @@ class orderController extends Controller
         ]);
     }
     function getOrderByUser(Request $request, $id){
-       $orders = order::where("user_id", $id)->get();
+       $orders = order::where("facility_id", $id)->get();
        if($orders->isEmpty()){
         return response()->json([
             "status"=> "error",

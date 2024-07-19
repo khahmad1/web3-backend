@@ -13,6 +13,7 @@ class orderLineController extends Controller
     function create(Request $request){
         $orderLine = new orderLine();
         $orderLine->price = $request->price;
+        $orderLine->quantity = $request->quantity;
         $medicine = medicine::find($request->medicine_id);
         $orderLine->medicine()->associate($medicine);
         $order = order::find($request->order_id);

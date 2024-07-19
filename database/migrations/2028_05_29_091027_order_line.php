@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create("order_lines", function (Blueprint $table) {
             $table->bigIncrements("id");
             $table->unsignedBigInteger("medicine_id");
+            $table->integer('quantity');
             $table->foreign("medicine_id")->references("id")->on("medicine");
             $table->unsignedBigInteger("order_id");
             $table->foreign("order_id")->references("id")->on("orders");
