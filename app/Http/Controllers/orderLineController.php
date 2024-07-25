@@ -76,18 +76,25 @@ class orderLineController extends Controller
             "message"=> "order line deleted successfully"
         ]);
     }
-    function getLineByOrder(Request $request, $id){
-
-       $orderLines = orderLine::where("order_id", $id)->get();
-       if($orderLines->isEmpty()){
-        return response()->json([
-            "status"=> "error",
-            "message"=> "No order with id ".$id
-        ],404);
-        }  
-       return response()->json([
-        "status"=> "success",
-        "message" => $orderLines
-       ],200);
+    function getLineByOrder(Request $request, $id) {
+        $orderLines = OrderLine::where('order_id', $id)->get();
+    
+        if ($orderLines->isEmpty()) {
+            return response()->json([
+                "status" => "error",
+                "message" => "No order with id " . $id
+            ], 404);
+        }
+    
+        $orderLinesWithMedicine = $orderLines->map(function ($orderLine) {
+            $medicine = Medicine::find($orderLine->medicine_id);
+            return [
+                'orderLine' => $orderLine,
+                'medicine' => $medicine
+            ];
+        });
+    
+        return response()->json($orderLinesWithMedicine);
     }
+    
 }

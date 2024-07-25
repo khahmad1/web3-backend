@@ -38,10 +38,8 @@ class orderController extends Controller
                 "message"=> "order does not exist"
             ]);
         }
-        return response()->json([
-            "status"=> "success",
-            "message"=> $order
-        ]);
+        return response()->json( $order
+        );
     }
     function update(Request $request, $id){
         $order = Order::find($id);
@@ -63,6 +61,36 @@ class orderController extends Controller
             "message"=> $order
         ]);
     }
+    function updateStatus(Request $request, $id) {
+        // Validate the incoming request to ensure the status is provided
+        $request->validate([
+            'status' => 'required|string'
+        ]);
+    
+        // Find the order by ID
+        $order = Order::find($id);
+    
+        // Check if the order exists
+        if (!$order) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Order does not exist"
+            ], 404);
+        }
+    
+        // Update the status field
+        $order->status = $request->status;
+    
+        // Save the changes to the order
+        $order->save();
+    
+        // Return a success response with the updated order
+        return response()->json([
+            "status" => "success",
+            "message" => $order
+        ]);
+    }
+    
     function delete(Request $request, $id){
         $order = Order::find($id);
         if(!$order){
@@ -78,17 +106,24 @@ class orderController extends Controller
         ]);
     }
     function getOrderByUser(Request $request, $id){
-       $orders = order::where("facility_id", $id)->get();
+       $orders = order::where("user_id", $id)->get();
        if($orders->isEmpty()){
         return response()->json([
             "status"=> "error",
             "message"=> "No user with id ".$id
         ],404);
         }  
-       return response()->json([
-        "status"=> "success",
-        "message" => $orders
-       ]);
+       return response()->json(
+        $orders
+       );
         
+    }  public function getAllOrder()
+    {
+        // Fetch all medicines with related category, type, and company information
+        $orders = order::with('user')->get();
+    
+        return response()->json($orders);
     }
+
+
 }

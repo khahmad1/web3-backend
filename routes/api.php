@@ -79,6 +79,8 @@ Route::delete('/medicine/delete/{id}',[medicineController::class,'deleteMedicine
 //ORDER
 Route::post('/order/create',[orderController::class,'create']);
 Route::get('/order/read/{id?}',[orderController::class,'read']);
+Route::get('/orders',[orderController::class,'getAllOrder']);
+Route::post('/order/status/{id}',[orderController::class,'updateStatus']);
 Route::get('/order/user/{id?}',[orderController::class,'getOrderByUser']);
 Route::post('/order/update/{id}',[orderController::class,'update']);
 Route::delete('/order/delete/{id}',[orderController::class,'delete']);
@@ -87,6 +89,6 @@ Route::delete('/order/delete/{id}',[orderController::class,'delete']);
 //ORDER LINE
 Route::post('/orderline/create',[orderLineController::class,'create']);
 Route::get('/orderline/read/{id?}',[orderLineController::class,'read']);
-Route::get('/orderline/read/{id?}',[orderLineController::class,'getLineByOrder']);
+Route::get('/orderline/order/{id?}',[orderLineController::class,'getLineByOrder']);
 Route::post('/orderline/update/{id}',[orderLineController::class,'update']);
 Route::delete('/orderline/delete/{id}',[orderLineController::class,'delete']);
