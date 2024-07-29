@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\order;
+use App\Models\orderLine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -137,6 +140,34 @@ public function AdminRole(Request $request, $id)
             'user' => $user
         ]);
     }
+    public function deleteUser($id)
+    {
+        // Find the user by id
+        $user = User::find($id);
+    
+        // Check if the user exists
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        // Get all orders of the user
+     $orders=   Order::where('user_id', $id);
+    
+        // Iterate through each order and delete the order lines
+        foreach ($orders->get() as $order) {
+            orderLine::where('order_id', $order->id)->delete();
+        }
+    
+        // Delete the user's orders
+        $orders->delete();
+    
+        // Delete the user
+        $user->delete();
+    
+        return response()->json(['message' => 'User, their orders, and order lines have been deleted'], 200);
+    }
+    
+
 
 
 }

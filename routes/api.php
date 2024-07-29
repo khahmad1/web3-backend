@@ -34,7 +34,7 @@ Route::post('/support/create',[supportController::class,'create']);
 Route::get('/support/read/{id?}',[supportController::class,'read']);
 Route::post('/support/update/{id}',[supportController::class,'update']);
 Route::delete('/support/delete/{id}',[supportController::class,'delete']);
-Route::delete('/support',[supportController::class,'getAllMessage']);
+Route::get('/support',[supportController::class,'getAllMessage']);
 
 //CATEGORY
 Route::post('/category/create',[categoryController::class,'create']);
@@ -66,6 +66,8 @@ Route::post('/user/logout',[AuthController::class,'logout']);
 Route::get('/user/admins',[AuthController::class,'getAdmins']);
 Route::get('/user/customers',[AuthController::class,'getCustomers']);
 Route::post('/user/updateRole/{id}',[AuthController::class,'AdminRole']);
+Route::delete('/user/delete/{id}',[AuthController::class,'deleteUser']);
+
 
 
 // medicine

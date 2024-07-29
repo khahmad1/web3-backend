@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\order;
+use App\Models\orderLine;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -99,6 +100,7 @@ class orderController extends Controller
                 "message"=> "order does not exist"
             ]);
         }
+        orderLine::where('order_id', $id)->delete();
         $order->delete();
         return response()->json([
             "status"=> "success",
