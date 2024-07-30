@@ -63,10 +63,7 @@ class medicineController extends Controller
         try {
             // Retrieve the medicine record
             $medicine = Medicine::findOrFail($id);
-            if ($medicine->fails()) {
-                return response()->json('medicine not found', 400);
-            }
-
+    
             // Validate the incoming request
             $validator = Validator::make($request->all(), [
                 'name' => 'sometimes|required',
@@ -78,45 +75,51 @@ class medicineController extends Controller
                 'company_id' => 'sometimes|required|exists:company,id',
                 'expiration_date' => 'sometimes|required|date',
             ]);
-
+    
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first()], 400);
             }
-
+    
             // Update medicine details
             if ($request->hasFile('image')) {
                 // Delete the old image
                 if ($medicine->image) {
                     Storage::delete(str_replace('/storage/', '', $medicine->image));
                 }
-
+    
                 // Save the new image
                 $image_path = $request->file('image')->store('images', 'public');
                 $url = Storage::url($image_path);
                 $medicine->image = $url;
             }
-
+    
             // Update basic attributes
-            $medicine->update($request->only([
+            $updateData = $request->only([
                 'name',
                 'quantity',
                 'price',
                 'expiration_date',
-            ]));
-
+            ]);
+    
+            foreach ($updateData as $key => $value) {
+                if ($request->has($key)) {
+                    $medicine->$key = $value;
+                }
+            }
+    
             // Update category, type, and company associations
             if ($request->has('category_id')) {
-                $medicine->category()->associate(category::find($request->input('category_id')));
+                $medicine->category()->associate(Category::find($request->input('category_id')));
             }
             if ($request->has('type_id')) {
-                $medicine->type()->associate(type::find($request->input('type_id')));
+                $medicine->type()->associate(Type::find($request->input('type_id')));
             }
             if ($request->has('company_id')) {
-                $medicine->company()->associate(company::find($request->input('company_id')));
+                $medicine->company()->associate(Company::find($request->input('company_id')));
             }
-
+    
             $medicine->save();
-
+    
             return response()->json([
                 'message' => 'Medicine updated successfully',
                 'medicine' => $medicine,
@@ -127,6 +130,7 @@ class medicineController extends Controller
             ], 500);
         }
     }
+    
     public function getAllMedicine()
     {
         // Fetch all medicines with related category, type, and company information

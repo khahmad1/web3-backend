@@ -59,6 +59,7 @@ Route::get('/company',[companyController::class,'getAllCompany']);
 
 
 
+
 Route::post('/user/login',[AuthController::class,'login']);
 Route::post('/user/register',[AuthController::class,'register']);
 Route::post('/user/refresh',[AuthController::class,'refresh']);
@@ -66,6 +67,7 @@ Route::post('/user/logout',[AuthController::class,'logout']);
 Route::get('/user/admins',[AuthController::class,'getAdmins']);
 Route::get('/user/customers',[AuthController::class,'getCustomers']);
 Route::post('/user/updateRole/{id}',[AuthController::class,'AdminRole']);
+Route::post('/user/update/{id}',[AuthController::class,'update']);
 Route::delete('/user/delete/{id}',[AuthController::class,'deleteUser']);
 
 

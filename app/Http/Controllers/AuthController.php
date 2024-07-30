@@ -85,6 +85,42 @@ class AuthController extends Controller
             ]
         ]);
     }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'sometimes|string|max:255',
+        'phone' => 'sometimes|string',
+        'address' => 'sometimes|string',
+        'email' => 'sometimes|string|email|max:255|unique:users,email,' . $id,
+        'password' => 'sometimes|string|min:6',
+        'logo' => 'sometimes|file|mimes:jpeg,png,jpg,gif|max:2048',
+        'is_admin' => 'sometimes|boolean'
+    ]);
+
+    $user = User::findOrFail($id);
+
+    if ($request->hasFile('logo')) {
+        // Delete the old logo if it exists
+        if ($user->logo) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $user->logo));
+        }
+        $image_path = $request->file('logo')->store('logos', 'public');
+        $user->logo = Storage::url($image_path);
+    }
+
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->update($request->only(['name', 'phone', 'address', 'email', 'is_admin']));
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'User updated successfully',
+        'user' => $user,
+    ]);
+}
+
     
     
     public function logout()
